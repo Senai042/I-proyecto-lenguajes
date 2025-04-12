@@ -1,0 +1,1205 @@
+{
+  "curso": {
+    "codigo": "CALC101",
+    "nombre": "Cálculo Integral y Diferencial",
+    "temas": [
+      {
+        "id": "T2",
+        "nombre": "Límite y continuidad de una función",
+        "subtemas": [
+          {
+            "id": "2.1",
+            "nombre": "Comprenda el concepto de límite de una función"
+          },
+          {
+            "id": "2.2",
+            "nombre": "Determine el límite de una función en un punto empleando los teoremas sobre límites"
+          },
+          {
+            "id": "2.3",
+            "nombre": "Determine el límite al infinito de una función"
+          },
+          {
+            "id": "2.4",
+            "nombre": "Comprenda el concepto de continuidad de una función"
+          },
+          {
+            "id": "2.5",
+            "nombre": "Analice la continuidad de una función"
+          }
+        ]
+      },
+      {
+        "id": "T3",
+        "nombre": "Derivada de una función",
+        "subtemas": [
+          {
+            "id": "3.1",
+            "nombre": "Comprenda el concepto de derivada de una función"
+          },
+          {
+            "id": "3.2",
+            "nombre": "Determine la derivada de funciones algebraicas, exponenciales, logarítmicas, trigonométricas e inversas"
+          },
+          {
+            "id": "3.3",
+            "nombre": "Comprenda el concepto de diferencial de una función"
+          },
+          {
+            "id": "3.4",
+            "nombre": "Determine las derivadas de orden superior de una función"
+          },
+          {
+            "id": "3.5",
+            "nombre": "Determine la derivada de una función dada en forma implícita"
+          }
+        ]
+      },
+      {
+        "id": "T4",
+        "nombre": "Aplicaciones de la derivada",
+        "subtemas": [
+          {
+            "id": "4.1",
+            "nombre": "Aplique el concepto de derivada a la resolución de problemas (movimiento rectilíneo, razones de cambio)"
+          },
+          {
+            "id": "4.2",
+            "nombre": "Represente el gráfico de una función"
+          },
+          {
+            "id": "4.3",
+            "nombre": "Resuelva problemas de máximos y mínimos"
+          },
+          {
+            "id": "4.4",
+            "nombre": "Aplique el método de Newton para encontrar ceros de una función"
+          }
+        ]
+      },
+      {
+        "id": "T5",
+        "nombre": "Integral indefinida",
+        "subtemas": [
+          {
+            "id": "5.1",
+            "nombre": "Comprenda el concepto de integral indefinida"
+          },
+          {
+            "id": "5.2",
+            "nombre": "Determine integrales indefinidas con técnicas de integración"
+          }
+        ]
+      },
+      {
+        "id": "T6",
+        "nombre": "Integral definida",
+        "subtemas": [
+          {
+            "id": "6.1",
+            "nombre": "Comprenda el concepto de integral definida"
+          },
+          {
+            "id": "6.2",
+            "nombre": "Cálculo con el Teorema Fundamental del Cálculo"
+          },
+          {
+            "id": "6.3",
+            "nombre": "Cálculo de área entre curvas"
+          },
+          {
+            "id": "6.4",
+            "nombre": "Longitud de curvas"
+          },
+          {
+            "id": "6.5",
+            "nombre": "Aplicación en Física"
+          }
+        ]
+      },
+      {
+        "id": "T7",
+        "nombre": "Integrales impropias",
+        "subtemas": [
+          {
+            "id": "7.1",
+            "nombre": "Comprenda el concepto de integral impropia"
+          },
+          {
+            "id": "7.2",
+            "nombre": "Comprenda convergencia de integrales impropias"
+          },
+          {
+            "id": "7.3",
+            "nombre": "Convergencia de integrales (definición)"
+          },
+          {
+            "id": "7.4",
+            "nombre": "Área bajo curva con integrales impropias"
+          },
+          {
+            "id": "7.5",
+            "nombre": "Convergencia con criterios"
+          }
+        ]
+      }
+    ]
+  },
+  "evaluaciones": [
+    {
+      "id": "P1",
+      "nombre": "Parcial 1",
+      "tipo": "parcial",
+      "peso": 0.25,
+      "subtemas": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4",
+        "2.5",
+        "3.1",
+        "3.2"
+      ]
+    },
+    {
+      "id": "P2",
+      "nombre": "Parcial 2",
+      "tipo": "parcial",
+      "peso": 0.25,
+      "subtemas": [
+        "3.3",
+        "3.4",
+        "3.5",
+        "4.1",
+        "4.2",
+        "4.3",
+        "4.4"
+      ]
+    },
+    {
+      "id": "P3",
+      "nombre": "Parcial 3",
+      "tipo": "parcial",
+      "peso": 0.25,
+      "subtemas": [
+        "5.1",
+        "5.2",
+        "6.1",
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "7.1",
+        "7.2",
+        "7.3",
+        "7.4",
+        "7.5"
+      ]
+    },
+    {
+      "id": "T1",
+      "nombre": "Tarea 1",
+      "tipo": "tarea",
+      "peso": 0.0416,
+      "subtemas": [
+        "2.1",
+        "2.2"
+      ]
+    },
+    {
+      "id": "T2",
+      "nombre": "Tarea 2",
+      "tipo": "tarea",
+      "peso": 0.0416,
+      "subtemas": [
+        "3.1",
+        "3.2"
+      ]
+    },
+    {
+      "id": "T3",
+      "nombre": "Tarea 3",
+      "tipo": "tarea",
+      "peso": 0.0416,
+      "subtemas": [
+        "5.1",
+        "5.2"
+      ]
+    },
+    {
+      "id": "Q1",
+      "nombre": "Quiz 1",
+      "tipo": "quiz",
+      "peso": 0.0416,
+      "subtemas": [
+        "2.3",
+        "2.4",
+        "2.5"
+      ]
+    },
+    {
+      "id": "Q2",
+      "nombre": "Quiz 2",
+      "tipo": "quiz",
+      "peso": 0.0416,
+      "subtemas": [
+        "4.1",
+        "4.2",
+        "4.4"
+      ]
+    },
+    {
+      "id": "Q3",
+      "nombre": "Quiz 3",
+      "tipo": "quiz",
+      "peso": 0.0416,
+      "subtemas": [
+        "5.2",
+        "6.2",
+        "7.1"
+      ]
+    }
+  ],
+  "estudiantes": [
+    {
+      "id": "E1",
+      "nombre": "Ana Rodríguez",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 74.7,
+          "subtemas": {
+            "2.1": 92,
+            "2.2": 81,
+            "2.3": 64,
+            "2.4": 71,
+            "2.5": 64,
+            "3.1": 77,
+            "3.2": 74
+          }
+        },
+        "P2": {
+          "nota": 78.4,
+          "subtemas": {
+            "3.3": 93,
+            "3.4": 97,
+            "3.5": 61,
+            "4.1": 64,
+            "4.2": 89,
+            "4.3": 76,
+            "4.4": 69
+          }
+        },
+        "P3": {
+          "nota": 78.8,
+          "subtemas": {
+            "5.1": 86,
+            "5.2": 74,
+            "6.1": 98,
+            "6.2": 97,
+            "6.3": 97,
+            "6.4": 60,
+            "6.5": 76,
+            "7.1": 76,
+            "7.2": 77,
+            "7.3": 67,
+            "7.4": 68,
+            "7.5": 69
+          }
+        },
+        "T1": {
+          "nota": 64.0,
+          "subtemas": {
+            "2.1": 61,
+            "2.2": 67
+          }
+        },
+        "T2": {
+          "nota": 74.0,
+          "subtemas": {
+            "3.1": 77,
+            "3.2": 71
+          }
+        },
+        "T3": {
+          "nota": 85.5,
+          "subtemas": {
+            "5.1": 72,
+            "5.2": 99
+          }
+        },
+        "Q1": {
+          "nota": 77.0,
+          "subtemas": {
+            "2.3": 96,
+            "2.4": 66,
+            "2.5": 69
+          }
+        },
+        "Q2": {
+          "nota": 81.7,
+          "subtemas": {
+            "4.1": 82,
+            "4.2": 75,
+            "4.4": 88
+          }
+        },
+        "Q3": {
+          "nota": 88.7,
+          "subtemas": {
+            "5.2": 83,
+            "6.2": 85,
+            "7.1": 98
+          }
+        }
+      },
+      "nota_final": 77.6
+    },
+    {
+      "id": "E2",
+      "nombre": "Carlos Jiménez",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 82.3,
+          "subtemas": {
+            "2.1": 94,
+            "2.2": 75,
+            "2.3": 72,
+            "2.4": 84,
+            "2.5": 78,
+            "3.1": 95,
+            "3.2": 78
+          }
+        },
+        "P2": {
+          "nota": 81.4,
+          "subtemas": {
+            "3.3": 97,
+            "3.4": 89,
+            "3.5": 64,
+            "4.1": 66,
+            "4.2": 87,
+            "4.3": 76,
+            "4.4": 91
+          }
+        },
+        "P3": {
+          "nota": 84.4,
+          "subtemas": {
+            "5.1": 67,
+            "5.2": 73,
+            "6.1": 77,
+            "6.2": 89,
+            "6.3": 81,
+            "6.4": 87,
+            "6.5": 76,
+            "7.1": 99,
+            "7.2": 95,
+            "7.3": 78,
+            "7.4": 99,
+            "7.5": 92
+          }
+        },
+        "T1": {
+          "nota": 95.0,
+          "subtemas": {
+            "2.1": 90,
+            "2.2": 100
+          }
+        },
+        "T2": {
+          "nota": 78.5,
+          "subtemas": {
+            "3.1": 83,
+            "3.2": 74
+          }
+        },
+        "T3": {
+          "nota": 72.0,
+          "subtemas": {
+            "5.1": 71,
+            "5.2": 73
+          }
+        },
+        "Q1": {
+          "nota": 70.0,
+          "subtemas": {
+            "2.3": 67,
+            "2.4": 78,
+            "2.5": 65
+          }
+        },
+        "Q2": {
+          "nota": 74.3,
+          "subtemas": {
+            "4.1": 83,
+            "4.2": 68,
+            "4.4": 72
+          }
+        },
+        "Q3": {
+          "nota": 84.7,
+          "subtemas": {
+            "5.2": 81,
+            "6.2": 88,
+            "7.1": 85
+          }
+        }
+      },
+      "nota_final": 81.8
+    },
+    {
+      "id": "E3",
+      "nombre": "Luis Fernández",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 83.7,
+          "subtemas": {
+            "2.1": 92,
+            "2.2": 73,
+            "2.3": 90,
+            "2.4": 90,
+            "2.5": 82,
+            "3.1": 60,
+            "3.2": 99
+          }
+        },
+        "P2": {
+          "nota": 81.1,
+          "subtemas": {
+            "3.3": 84,
+            "3.4": 100,
+            "3.5": 82,
+            "4.1": 95,
+            "4.2": 68,
+            "4.3": 68,
+            "4.4": 71
+          }
+        },
+        "P3": {
+          "nota": 82.6,
+          "subtemas": {
+            "5.1": 66,
+            "5.2": 95,
+            "6.1": 65,
+            "6.2": 75,
+            "6.3": 81,
+            "6.4": 84,
+            "6.5": 81,
+            "7.1": 86,
+            "7.2": 95,
+            "7.3": 96,
+            "7.4": 100,
+            "7.5": 67
+          }
+        },
+        "T1": {
+          "nota": 75.5,
+          "subtemas": {
+            "2.1": 63,
+            "2.2": 88
+          }
+        },
+        "T2": {
+          "nota": 78.5,
+          "subtemas": {
+            "3.1": 95,
+            "3.2": 62
+          }
+        },
+        "T3": {
+          "nota": 69.0,
+          "subtemas": {
+            "5.1": 66,
+            "5.2": 72
+          }
+        },
+        "Q1": {
+          "nota": 82.0,
+          "subtemas": {
+            "2.3": 94,
+            "2.4": 80,
+            "2.5": 72
+          }
+        },
+        "Q2": {
+          "nota": 92.7,
+          "subtemas": {
+            "4.1": 97,
+            "4.2": 81,
+            "4.4": 100
+          }
+        },
+        "Q3": {
+          "nota": 73.7,
+          "subtemas": {
+            "5.2": 63,
+            "6.2": 63,
+            "7.1": 95
+          }
+        }
+      },
+      "nota_final": 81.5
+    },
+    {
+      "id": "E4",
+      "nombre": "María Gómez",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 85.9,
+          "subtemas": {
+            "2.1": 80,
+            "2.2": 100,
+            "2.3": 91,
+            "2.4": 85,
+            "2.5": 94,
+            "3.1": 89,
+            "3.2": 62
+          }
+        },
+        "P2": {
+          "nota": 80.4,
+          "subtemas": {
+            "3.3": 95,
+            "3.4": 77,
+            "3.5": 98,
+            "4.1": 64,
+            "4.2": 86,
+            "4.3": 73,
+            "4.4": 70
+          }
+        },
+        "P3": {
+          "nota": 75.0,
+          "subtemas": {
+            "5.1": 62,
+            "5.2": 64,
+            "6.1": 83,
+            "6.2": 86,
+            "6.3": 65,
+            "6.4": 60,
+            "6.5": 90,
+            "7.1": 83,
+            "7.2": 73,
+            "7.3": 79,
+            "7.4": 90,
+            "7.5": 65
+          }
+        },
+        "T1": {
+          "nota": 76.0,
+          "subtemas": {
+            "2.1": 84,
+            "2.2": 68
+          }
+        },
+        "T2": {
+          "nota": 85.5,
+          "subtemas": {
+            "3.1": 80,
+            "3.2": 91
+          }
+        },
+        "T3": {
+          "nota": 68.0,
+          "subtemas": {
+            "5.1": 64,
+            "5.2": 72
+          }
+        },
+        "Q1": {
+          "nota": 92.0,
+          "subtemas": {
+            "2.3": 100,
+            "2.4": 91,
+            "2.5": 85
+          }
+        },
+        "Q2": {
+          "nota": 69.7,
+          "subtemas": {
+            "4.1": 74,
+            "4.2": 65,
+            "4.4": 70
+          }
+        },
+        "Q3": {
+          "nota": 71.7,
+          "subtemas": {
+            "5.2": 62,
+            "6.2": 65,
+            "7.1": 88
+          }
+        }
+      },
+      "nota_final": 79.6
+    },
+    {
+      "id": "E5",
+      "nombre": "Sofía Herrera",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 80.6,
+          "subtemas": {
+            "2.1": 73,
+            "2.2": 66,
+            "2.3": 76,
+            "2.4": 82,
+            "2.5": 89,
+            "3.1": 100,
+            "3.2": 78
+          }
+        },
+        "P2": {
+          "nota": 82.3,
+          "subtemas": {
+            "3.3": 94,
+            "3.4": 95,
+            "3.5": 73,
+            "4.1": 64,
+            "4.2": 65,
+            "4.3": 97,
+            "4.4": 88
+          }
+        },
+        "P3": {
+          "nota": 78.8,
+          "subtemas": {
+            "5.1": 93,
+            "5.2": 61,
+            "6.1": 100,
+            "6.2": 96,
+            "6.3": 64,
+            "6.4": 92,
+            "6.5": 93,
+            "7.1": 69,
+            "7.2": 69,
+            "7.3": 67,
+            "7.4": 69,
+            "7.5": 72
+          }
+        },
+        "T1": {
+          "nota": 78.5,
+          "subtemas": {
+            "2.1": 76,
+            "2.2": 81
+          }
+        },
+        "T2": {
+          "nota": 79.5,
+          "subtemas": {
+            "3.1": 74,
+            "3.2": 85
+          }
+        },
+        "T3": {
+          "nota": 76.0,
+          "subtemas": {
+            "5.1": 74,
+            "5.2": 78
+          }
+        },
+        "Q1": {
+          "nota": 77.7,
+          "subtemas": {
+            "2.3": 87,
+            "2.4": 71,
+            "2.5": 75
+          }
+        },
+        "Q2": {
+          "nota": 80.3,
+          "subtemas": {
+            "4.1": 76,
+            "4.2": 80,
+            "4.4": 85
+          }
+        },
+        "Q3": {
+          "nota": 69.3,
+          "subtemas": {
+            "5.2": 62,
+            "6.2": 76,
+            "7.1": 70
+          }
+        }
+      },
+      "nota_final": 79.6
+    },
+    {
+      "id": "E6",
+      "nombre": "Andrés Castro",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 81.6,
+          "subtemas": {
+            "2.1": 95,
+            "2.2": 81,
+            "2.3": 87,
+            "2.4": 67,
+            "2.5": 80,
+            "3.1": 81,
+            "3.2": 80
+          }
+        },
+        "P2": {
+          "nota": 81.3,
+          "subtemas": {
+            "3.3": 66,
+            "3.4": 99,
+            "3.5": 74,
+            "4.1": 90,
+            "4.2": 95,
+            "4.3": 67,
+            "4.4": 78
+          }
+        },
+        "P3": {
+          "nota": 80.0,
+          "subtemas": {
+            "5.1": 99,
+            "5.2": 64,
+            "6.1": 84,
+            "6.2": 60,
+            "6.3": 96,
+            "6.4": 92,
+            "6.5": 64,
+            "7.1": 75,
+            "7.2": 67,
+            "7.3": 64,
+            "7.4": 96,
+            "7.5": 99
+          }
+        },
+        "T1": {
+          "nota": 77.5,
+          "subtemas": {
+            "2.1": 76,
+            "2.2": 79
+          }
+        },
+        "T2": {
+          "nota": 80.0,
+          "subtemas": {
+            "3.1": 77,
+            "3.2": 83
+          }
+        },
+        "T3": {
+          "nota": 73.5,
+          "subtemas": {
+            "5.1": 87,
+            "5.2": 60
+          }
+        },
+        "Q1": {
+          "nota": 69.0,
+          "subtemas": {
+            "2.3": 72,
+            "2.4": 69,
+            "2.5": 66
+          }
+        },
+        "Q2": {
+          "nota": 79.7,
+          "subtemas": {
+            "4.1": 83,
+            "4.2": 87,
+            "4.4": 69
+          }
+        },
+        "Q3": {
+          "nota": 93.0,
+          "subtemas": {
+            "5.2": 94,
+            "6.2": 90,
+            "7.1": 95
+          }
+        }
+      },
+      "nota_final": 80.4
+    },
+    {
+      "id": "E7",
+      "nombre": "Elena Vargas",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 79.6,
+          "subtemas": {
+            "2.1": 78,
+            "2.2": 62,
+            "2.3": 90,
+            "2.4": 91,
+            "2.5": 88,
+            "3.1": 64,
+            "3.2": 84
+          }
+        },
+        "P2": {
+          "nota": 79.7,
+          "subtemas": {
+            "3.3": 64,
+            "3.4": 81,
+            "3.5": 65,
+            "4.1": 66,
+            "4.2": 87,
+            "4.3": 96,
+            "4.4": 99
+          }
+        },
+        "P3": {
+          "nota": 82.9,
+          "subtemas": {
+            "5.1": 81,
+            "5.2": 93,
+            "6.1": 97,
+            "6.2": 88,
+            "6.3": 81,
+            "6.4": 78,
+            "6.5": 74,
+            "7.1": 88,
+            "7.2": 90,
+            "7.3": 91,
+            "7.4": 74,
+            "7.5": 60
+          }
+        },
+        "T1": {
+          "nota": 80.5,
+          "subtemas": {
+            "2.1": 81,
+            "2.2": 80
+          }
+        },
+        "T2": {
+          "nota": 77.5,
+          "subtemas": {
+            "3.1": 72,
+            "3.2": 83
+          }
+        },
+        "T3": {
+          "nota": 78.0,
+          "subtemas": {
+            "5.1": 60,
+            "5.2": 96
+          }
+        },
+        "Q1": {
+          "nota": 78.7,
+          "subtemas": {
+            "2.3": 82,
+            "2.4": 86,
+            "2.5": 68
+          }
+        },
+        "Q2": {
+          "nota": 68.3,
+          "subtemas": {
+            "4.1": 72,
+            "4.2": 64,
+            "4.4": 69
+          }
+        },
+        "Q3": {
+          "nota": 79.0,
+          "subtemas": {
+            "5.2": 85,
+            "6.2": 91,
+            "7.1": 61
+          }
+        }
+      },
+      "nota_final": 79.8
+    },
+    {
+      "id": "E8",
+      "nombre": "Pedro Solano",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 82.7,
+          "subtemas": {
+            "2.1": 100,
+            "2.2": 66,
+            "2.3": 83,
+            "2.4": 100,
+            "2.5": 75,
+            "3.1": 76,
+            "3.2": 79
+          }
+        },
+        "P2": {
+          "nota": 79.4,
+          "subtemas": {
+            "3.3": 60,
+            "3.4": 92,
+            "3.5": 72,
+            "4.1": 60,
+            "4.2": 87,
+            "4.3": 94,
+            "4.4": 91
+          }
+        },
+        "P3": {
+          "nota": 80.1,
+          "subtemas": {
+            "5.1": 93,
+            "5.2": 82,
+            "6.1": 60,
+            "6.2": 88,
+            "6.3": 93,
+            "6.4": 90,
+            "6.5": 88,
+            "7.1": 71,
+            "7.2": 65,
+            "7.3": 68,
+            "7.4": 80,
+            "7.5": 83
+          }
+        },
+        "T1": {
+          "nota": 67.5,
+          "subtemas": {
+            "2.1": 60,
+            "2.2": 75
+          }
+        },
+        "T2": {
+          "nota": 96.5,
+          "subtemas": {
+            "3.1": 98,
+            "3.2": 95
+          }
+        },
+        "T3": {
+          "nota": 84.0,
+          "subtemas": {
+            "5.1": 94,
+            "5.2": 74
+          }
+        },
+        "Q1": {
+          "nota": 84.3,
+          "subtemas": {
+            "2.3": 89,
+            "2.4": 90,
+            "2.5": 74
+          }
+        },
+        "Q2": {
+          "nota": 74.7,
+          "subtemas": {
+            "4.1": 71,
+            "4.2": 89,
+            "4.4": 64
+          }
+        },
+        "Q3": {
+          "nota": 85.7,
+          "subtemas": {
+            "5.2": 77,
+            "6.2": 98,
+            "7.1": 82
+          }
+        }
+      },
+      "nota_final": 81.1
+    },
+    {
+      "id": "E9",
+      "nombre": "Lucía Rojas",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 75.7,
+          "subtemas": {
+            "2.1": 77,
+            "2.2": 80,
+            "2.3": 69,
+            "2.4": 97,
+            "2.5": 61,
+            "3.1": 71,
+            "3.2": 75
+          }
+        },
+        "P2": {
+          "nota": 68.0,
+          "subtemas": {
+            "3.3": 81,
+            "3.4": 71,
+            "3.5": 63,
+            "4.1": 66,
+            "4.2": 63,
+            "4.3": 67,
+            "4.4": 65
+          }
+        },
+        "P3": {
+          "nota": 80.8,
+          "subtemas": {
+            "5.1": 69,
+            "5.2": 99,
+            "6.1": 71,
+            "6.2": 89,
+            "6.3": 79,
+            "6.4": 64,
+            "6.5": 83,
+            "7.1": 93,
+            "7.2": 97,
+            "7.3": 74,
+            "7.4": 72,
+            "7.5": 79
+          }
+        },
+        "T1": {
+          "nota": 78.5,
+          "subtemas": {
+            "2.1": 78,
+            "2.2": 79
+          }
+        },
+        "T2": {
+          "nota": 92.0,
+          "subtemas": {
+            "3.1": 85,
+            "3.2": 99
+          }
+        },
+        "T3": {
+          "nota": 82.5,
+          "subtemas": {
+            "5.1": 97,
+            "5.2": 68
+          }
+        },
+        "Q1": {
+          "nota": 80.7,
+          "subtemas": {
+            "2.3": 79,
+            "2.4": 86,
+            "2.5": 77
+          }
+        },
+        "Q2": {
+          "nota": 77.3,
+          "subtemas": {
+            "4.1": 74,
+            "4.2": 84,
+            "4.4": 74
+          }
+        },
+        "Q3": {
+          "nota": 71.0,
+          "subtemas": {
+            "5.2": 65,
+            "6.2": 79,
+            "7.1": 69
+          }
+        }
+      },
+      "nota_final": 76.2
+    },
+    {
+      "id": "E10",
+      "nombre": "Miguel Méndez",
+      "codigo_curso": "CALC101",
+      "evaluaciones": {
+        "P1": {
+          "nota": 75.4,
+          "subtemas": {
+            "2.1": 69,
+            "2.2": 62,
+            "2.3": 86,
+            "2.4": 97,
+            "2.5": 89,
+            "3.1": 61,
+            "3.2": 64
+          }
+        },
+        "P2": {
+          "nota": 79.6,
+          "subtemas": {
+            "3.3": 87,
+            "3.4": 98,
+            "3.5": 83,
+            "4.1": 65,
+            "4.2": 61,
+            "4.3": 65,
+            "4.4": 98
+          }
+        },
+        "P3": {
+          "nota": 88.7,
+          "subtemas": {
+            "5.1": 86,
+            "5.2": 79,
+            "6.1": 99,
+            "6.2": 79,
+            "6.3": 85,
+            "6.4": 80,
+            "6.5": 83,
+            "7.1": 100,
+            "7.2": 94,
+            "7.3": 88,
+            "7.4": 96,
+            "7.5": 95
+          }
+        },
+        "T1": {
+          "nota": 79.5,
+          "subtemas": {
+            "2.1": 81,
+            "2.2": 78
+          }
+        },
+        "T2": {
+          "nota": 79.5,
+          "subtemas": {
+            "3.1": 85,
+            "3.2": 74
+          }
+        },
+        "T3": {
+          "nota": 68.5,
+          "subtemas": {
+            "5.1": 71,
+            "5.2": 66
+          }
+        },
+        "Q1": {
+          "nota": 77.7,
+          "subtemas": {
+            "2.3": 65,
+            "2.4": 93,
+            "2.5": 75
+          }
+        },
+        "Q2": {
+          "nota": 87.7,
+          "subtemas": {
+            "4.1": 85,
+            "4.2": 84,
+            "4.4": 94
+          }
+        },
+        "Q3": {
+          "nota": 91.0,
+          "subtemas": {
+            "5.2": 76,
+            "6.2": 97,
+            "7.1": 100
+          }
+        }
+      },
+      "nota_final": 81.0
+    }
+  ]
+}
