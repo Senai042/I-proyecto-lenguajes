@@ -1,143 +1,166 @@
+# Base para programa en Python con interfaz Tkinter
+
 import json
+import os
+import tkinter as tk
+from tkinter import ttk, messagebox
 import matplotlib.pyplot as plt
+import statistics
+from collections import defaultdict
 
-def cargar_datos(path):# Carga de datos JSON
-
+# ========================
+# Carga de datos JSON
+# ========================
+def cargar_datos(path):
     with open(path, 'r', encoding='utf-8') as archivo:
         return json.load(archivo)
 
-def mostrar_estudiantes(data):# Mostrar información básica de estudiantes
-
-    print("\nEstudiantes registrados:")
-
-    for estudiante in data['estudiantes']:
-        print(f"- {estudiante['nombre']} ({estudiante['id']})")
-
-def mostrar_curso(data):# Mostrar información básica de cursos
-
-    curso = data['curso']
-
-    print(f"\nCurso: {curso['nombre']} ({curso['codigo']})")
-    print("Temas:")
-
-    for tema in curso['temas']:
-        print(f"  {tema['id']} - {tema['nombre']}")
-
-def guardar_datos(path, data):#Actualizar datos json
-
-    with open(path, 'w', encoding='utf-8') as archivo:
-        json.dump(data, archivo, indent=2, ensure_ascii=False)
-
-def agregar_estudiante(data):#generar un nuevo estudiante
-
-    nuevo = {
-        "id": input("ID del estudiante: "),
-        "nombre": input("Nombre: "),
-        "codigo_curso": data['curso']['codigo'],
-    }
-
-    print("Ingrese las notas por subtema para cada evaluación:")
-
-    evaluaciones = crear_estructura_evaluaciones(data)
-    nuevo["evaluaciones"] = evaluaciones
-    nuevo["nota_final"] = calcular_nota_final(data, evaluaciones)
-    data['estudiantes'].append(nuevo)
-
-    print("Estudiante agregado exitosamente.")
-
-def eliminar_estudiante(data): #eliminar algun estudiante.
-
-    id_est = input("ID del estudiante a eliminar: ")
-    data['estudiantes'] = [e for e in data['estudiantes'] if e['id'] != id_est]
-
-    print("Estudiante eliminado si existía.")
-
-def crear_estructura_evaluaciones(data):
-
-    evaluaciones = {}
-    for eval_def in data['evaluaciones']:
-        subtemas_dict = {}
-        for sub in eval_def['subtemas']:
-            try:
-                nota = float(input(f"  Nota para subtema {sub}: "))
-            except ValueError:
-                nota = 0.0
-            subtemas_dict[sub] = nota
-        promedio = sum(subtemas_dict.values()) / len(subtemas_dict) if subtemas_dict else 0.0
-        evaluaciones[eval_def['id']] = {
-            "nota": round(promedio, 1),
-            "subtemas": subtemas_dict
-        }
-    return evaluaciones
-
-def calcular_nota_final(data, evaluaciones):
-
-    total = 0.0
-    for eval_def in data['evaluaciones']:
-        eid = eval_def['id']
-        peso = eval_def['peso']
-        nota = evaluaciones[eid]['nota'] if eid in evaluaciones else 0.0
-        total += peso * nota
-    return round(total, 1)
-
-
-
-# Gráfico de evalución por estudiante
-def grafico_estudiante(data):
-    
-    id_est = input("ID del estudiante para graficar: ")
-    estudiante = next((e for e in data['estudiantes'] if e['id'] == id_est), None)
-    if not estudiante:
-        print("Estudiante no encontrado.")
-        return
-
-    x = []
-    y = []
-    for eval_id, info in estudiante['evaluaciones'].items():
-        x.append(eval_id)
-        y.append(info['nota'])
-
-    plt.plot(x, y, marker='o')
-    plt.title(f"Notas de {estudiante['nombre']}")
-    plt.xlabel("Evaluaciones")
+# ========================
+# Funciones de visualización
+# ========================
+def mostrar_grafico_estudiante(data, estudiante, tipo, tema_id=None):
+    plt.clf()
+    if tipo == 'general':
+        x = list(estudiante['evaluaciones'].keys())
+        y = [info['nota'] for info in estudiante['evaluaciones'].values()]
+        plt.plot(x, y, marker='o')
+        plt.title(f"Evolución general de {estudiante['nombre']}")
+    elif tipo == 'parciales':
+        parciales = {eid: info['nota'] for eid, info in estudiante['evaluaciones'].items() if eid.startswith('P')}
+        plt.bar(parciales.keys(), parciales.values())
+        plt.title(f"Parciales - {estudiante['nombre']}")
+    elif tipo == 'otros':
+        otros = {eid: info['nota'] for eid, info in estudiante['evaluaciones'].items() if not eid.startswith('P')}
+        plt.bar(otros.keys(), otros.values())
+        plt.title(f"Evaluaciones no parciales - {estudiante['nombre']}")
+    elif tipo == 'tema' and tema_id:
+        subtemas = [s['id'] for t in data['curso']['temas'] if t['id'] == tema_id for s in t['subtemas']]
+        tema_notas = {}
+        for eval_info in estudiante['evaluaciones'].values():
+            for sid, nota in eval_info['subtemas'].items():
+                if sid in subtemas:
+                    tema_notas[sid] = nota
+        plt.bar(tema_notas.keys(), tema_notas.values())
+        plt.title(f"Rendimiento en tema {tema_id} - {estudiante['nombre']}")
+    plt.xlabel("Evaluaciones/Subtemas")
     plt.ylabel("Nota")
     plt.ylim(0, 100)
     plt.grid(True)
+    plt.tight_layout()
     plt.show()
 
-#Menu
-def menu():
-    path = 'curso_estudiantes.json'
-    data = cargar_datos(path)
+def mostrar_grafico_general(data, tipo):
+    if tipo == 'notas':
+        notas_finales = [e['nota_final'] for e in data['estudiantes']]
+        nombres = [e['nombre'] for e in data['estudiantes']]
+        plt.bar(nombres, notas_finales)
+        plt.title("Rendimiento general del curso")
+        plt.xlabel("Estudiantes")
+        plt.ylabel("Nota Final")
+        plt.xticks(rotation=45, ha='right')
+        plt.ylim(0, 100)
+        plt.tight_layout()
+        plt.grid(True)
+        plt.show()
+        stats = f"Promedio: {round(statistics.mean(notas_finales),1)}\n"
+        stats += f"Moda: {statistics.mode(notas_finales)}\n"
+        stats += f"Máximo: {max(notas_finales)}\n"
+        stats += f"Mínimo: {min(notas_finales)}"
+        messagebox.showinfo("Estadísticas", stats)
 
-    while True:
-        print("\n--- MENÚ ---")
-        print("1. Mostrar estudiantes")
-        print("2. Mostrar información del curso")
-        print("3. Agregar estudiante")
-        print("4. Eliminar estudiante")
-        print("5. Guardar datos")
-        print("6. Gráfico de estudiante")
-        print("7. Salir")
+    elif tipo == 'subtemas':
+        subtema_notas = defaultdict(list)
+        for estudiante in data['estudiantes']:
+            for eval_info in estudiante['evaluaciones'].values():
+                for sid, nota in eval_info['subtemas'].items():
+                    subtema_notas[sid].append(nota)
+        subtema_promedios = {k: round(sum(v)/len(v),1) for k, v in subtema_notas.items() if v}
+        sorted_items = sorted(subtema_promedios.items(), key=lambda x: x[1], reverse=True)
+        x, y = zip(*sorted_items)
+        plt.figure(figsize=(10, 5))
+        plt.bar(x, y)
+        plt.title("Promedio por subtema")
+        plt.xlabel("Subtemas")
+        plt.ylabel("Nota Promedio")
+        plt.xticks(rotation=45, ha='right')
+        plt.ylim(0, 100)
+        plt.tight_layout()
+        plt.grid(True)
+        plt.show()
 
-        op = input("Seleccione una opción: ")
-        if op == '1':
-            mostrar_estudiantes(data)
-        elif op == '2':
-            mostrar_curso(data)
-        elif op == '3':
-            agregar_estudiante(data)
-        elif op == '4':
-            eliminar_estudiante(data)
-        elif op == '5':
-            guardar_datos(path, data)
-        elif op == '6':
-            grafico_estudiante(data)
-        elif op == '7':
-            print("Saliendo...")
-            break
+# ========================
+# Interfaz principal con Tkinter
+# ========================
+def lanzar_interfaz():
+    data = cargar_datos('curso_estudiantes.json')
+
+    root = tk.Tk()
+    root.title("Análisis de Rendimiento Académico")
+    root.geometry("600x400")
+
+    modo = tk.StringVar(value='estudiante')
+
+    def mostrar_panel_estudiante():
+        for widget in frame.winfo_children(): widget.destroy()
+
+        tk.Label(frame, text="Estudiante:").pack()
+        estudiantes_ids = [e['id'] for e in data['estudiantes']]
+        selected_id = tk.StringVar()
+        estudiante_dropdown = ttk.Combobox(frame, textvariable=selected_id, values=estudiantes_ids)
+        estudiante_dropdown.pack()
+
+        tk.Label(frame, text="Tipo de gráfica:").pack()
+        opciones = ["general", "parciales", "otros"] + [f"tema:{t['id']}" for t in data['curso']['temas']]
+        selected_option = tk.StringVar()
+        grafica_dropdown = ttk.Combobox(frame, textvariable=selected_option, values=opciones)
+        grafica_dropdown.pack()
+
+        def graficar_est():
+            est_id = selected_id.get()
+            opt = selected_option.get()
+            estudiante = next((e for e in data['estudiantes'] if e['id'] == est_id), None)
+            if not estudiante:
+                messagebox.showerror("Error", "Estudiante no encontrado")
+                return
+            if opt.startswith('tema:'):
+                mostrar_grafico_estudiante(data, estudiante, 'tema', tema_id=opt.split(':')[1])
+            else:
+                mostrar_grafico_estudiante(data, estudiante, opt)
+
+        tk.Button(frame, text="Graficar Estudiante", command=graficar_est).pack(pady=10)
+
+    def mostrar_panel_curso():
+        for widget in frame.winfo_children(): widget.destroy()
+
+        tk.Label(frame, text="Tipo de gráfica general:").pack()
+        opciones = ["notas", "subtemas"]
+        selected_option = tk.StringVar()
+        grafica_dropdown = ttk.Combobox(frame, textvariable=selected_option, values=opciones)
+        grafica_dropdown.pack()
+
+        def graficar():
+            opt = selected_option.get()
+            mostrar_grafico_general(data, opt)
+
+        tk.Button(frame, text="Graficar Curso", command=graficar).pack(pady=10)
+
+    def actualizar_panel():
+        if modo.get() == 'estudiante':
+            mostrar_panel_estudiante()
         else:
-            print("Opción inválida.")
+            mostrar_panel_curso()
 
+    selector_frame = tk.Frame(root)
+    selector_frame.pack(pady=10)
+    tk.Label(selector_frame, text="Seleccione el tipo de análisis:").pack()
+    ttk.Radiobutton(selector_frame, text="Estudiante", variable=modo, value='estudiante', command=actualizar_panel).pack(side='left')
+    ttk.Radiobutton(selector_frame, text="Curso", variable=modo, value='curso', command=actualizar_panel).pack(side='left')
 
-menu()
+    frame = tk.Frame(root)
+    frame.pack(pady=20)
+
+    actualizar_panel()
+    root.mainloop()
+
+if __name__ == '__main__':
+    lanzar_interfaz()
