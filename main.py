@@ -70,15 +70,6 @@ def crear_estructura_evaluaciones(data):
         }
     return evaluaciones
 
-def calcular_nota_final(data, evaluaciones):
-
-    total = 0.0
-    for eval_def in data['evaluaciones']:
-        eid = eval_def['id']
-        peso = eval_def['peso']
-        nota = evaluaciones[eid]['nota'] if eid in evaluaciones else 0.0
-        total += peso * nota
-    return round(total, 1)
 
 
 
@@ -105,10 +96,37 @@ def grafico_estudiante(data):
     plt.grid(True)
     plt.show()
 
+
+
+def cargar_resultados(path):
+    """Carga el JSON de resultados que generó OCaml."""
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def mostrar_resumen(resultados):
+    """Imprime mínimo, máximo y listado de notas finales."""
+    print(f"\n--- Resumen de OCaml ---")
+    print(f"Nota mínima: {resultados['min']:.2f}")
+    print(f"Nota máxima: {resultados['max']:.2f}\n")
+    print("Notas finales por estudiante:")
+    for r in resultados["results"]:
+        print(f"  {r['id']} – {r['nombre']}: {r['nota_final']:.2f}")
+
+def grafico_global(resultados):
+    """Dibuja un bar chart con todas las notas finales."""
+    ids   = [r["id"] for r in resultados["results"]]
+    notas = [r["nota_final"] for r in resultados["results"]]
+    plt.bar(ids, notas)
+    plt.ylabel("Nota final")
+    plt.title("Rendimiento final de todos los estudiantes")
+    plt.ylim(min(notas) - 1, max(notas) + 1)
+    plt.show()
+
+
 #Menu
 def menu():
-    path = 'curso_estudiantes.json'
-    data = cargar_datos(path)
+    data_est = cargar_datos('curso_estudiantes.json')  # tu función ya definida
+    # no llamamos a OCaml aquí, asumimos que ya generó resultados.json
 
     while True:
         print("\n--- MENÚ ---")
@@ -119,25 +137,33 @@ def menu():
         print("5. Guardar datos")
         print("6. Gráfico de estudiante")
         print("7. Salir")
+        print("8. Mostrar resumen de resultados OCaml")
+        print("9. Graficar resultados OCaml")
 
         op = input("Seleccione una opción: ")
         if op == '1':
-            mostrar_estudiantes(data)
+            mostrar_estudiantes(data_est)
         elif op == '2':
-            mostrar_curso(data)
+            mostrar_curso(data_est)
         elif op == '3':
-            agregar_estudiante(data)
+            agregar_estudiante(data_est)
         elif op == '4':
-            eliminar_estudiante(data)
+            eliminar_estudiante(data_est)
         elif op == '5':
-            guardar_datos(path, data)
+            guardar_datos('curso_estudiantes.json', data_est)
         elif op == '6':
-            grafico_estudiante(data)
+            grafico_estudiante(data_est)
+        elif op == '8':
+            res = cargar_resultados('resultados.json')
+            mostrar_resumen(res)
+        elif op == '9':
+            res = cargar_resultados('resultados.json')
+            grafico_global(res)
         elif op == '7':
             print("Saliendo...")
             break
         else:
             print("Opción inválida.")
 
-
-menu()
+if __name__ == "__main__":
+    menu()
