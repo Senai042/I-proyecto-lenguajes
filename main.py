@@ -162,5 +162,5 @@ def lanzar_interfaz():
     actualizar_panel()
     root.mainloop()
 
-if __name__ == '__main__':
-    lanzar_interfaz()
+
+lanzar_interfaz()

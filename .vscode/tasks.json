@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "OCaml: build",
+        "type": "shell",
+        "command": "dune build",
+        "options": { "cwd": "${workspaceFolder}/ocaml" },
+        "group": { "kind": "build", "isDefault": true }
+      },
+      {
+        "label": "OCaml: run",
+        "type": "shell",
+        "command": "dune exec ./calculos.exe",
+        "options": { "cwd": "${workspaceFolder}/ocaml" },
+        "group": "test",
+        "dependsOn": "OCaml: build"
+      },
+      {
+        "label": "Python: run",
+        "type": "shell",
+        "command": ".venv/bin/python main.py",
+        "options": { "cwd": "${workspaceFolder}" },
+        "group": "test"
+      },
+      {
+        "label": "All: OCaml → Python",
+        "type": "shell",
+        "dependsOrder": "sequence",
+        "dependsOn": ["OCaml: run", "Python: run"]
+      }
+    ]
+  }
+  

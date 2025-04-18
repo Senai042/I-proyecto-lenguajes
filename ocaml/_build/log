@@ -1,0 +1,16 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /home/mitsu/.cache/dune/db
+# Workspace root: /home/mitsu/proyectos/I-proyecto-lenguajes/ocaml
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /home/mitsu/.opam/5.1.1/bin/ocamlc.opt -config > /tmp/dune_3eb4b0_output
