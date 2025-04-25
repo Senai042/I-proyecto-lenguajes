@@ -190,5 +190,8 @@ def lanzar_interfaz():
     actualizar_panel()
     root.mainloop()
 
-
-lanzar_interfaz()
+# ========================
+# Punto de entrada principal
+# ========================
+if __name__ == "__main__":
+    lanzar_interfaz()

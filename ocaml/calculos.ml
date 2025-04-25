@@ -9,6 +9,10 @@ let redondear_decimales n decimales =
 let limitar_100 n =
   if n > 100.0 then 100.0 else n
 
+<<<<<<< HEAD
+=======
+(* Acumulador para listas con suma y conteo *)
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
 let actualizar_promedios mapa clave valor =
   let suma, cuenta =
     match StringMap.find_opt clave mapa with
@@ -17,6 +21,7 @@ let actualizar_promedios mapa clave valor =
   in
   StringMap.add clave (suma, cuenta) mapa
 
+<<<<<<< HEAD
 (* Función para tomar los primeros n elementos de una lista *)
 let rec take n lst =
   match lst with
@@ -31,6 +36,10 @@ let clasificar_tendencia p1 p2 p3 =
 
 let () =
   let json = from_file "./curso_estudiantes.json" in
+=======
+let () =
+  let json = from_file "../curso_estudiantes.json" in
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
   let evaluaciones = json |> member "evaluaciones" |> to_list in
   let estudiantes = json |> member "estudiantes" |> to_list in
 
@@ -96,6 +105,7 @@ let () =
         |> fun lst -> `Assoc lst
       in
 
+<<<<<<< HEAD
       let tendencia =
         try
           let p1 = StringMap.find "P1" notas_por_eval
@@ -105,14 +115,20 @@ let () =
         with _ -> `String "desconocida"
       in
 
+=======
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
       let estudiante_json =
         `Assoc [
           ("id", `String id);
           ("nombre", `String nombre);
           ("nota_final", `Float (limitar_100 (redondear_decimales nota_final 1)));
           ("notas_evaluaciones", notas_eval_json);
+<<<<<<< HEAD
           ("porcentaje_conocimiento", conocimiento_json);
           ("tendencia", tendencia)
+=======
+          ("porcentaje_conocimiento", conocimiento_json)
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
         ]
       in
 
@@ -123,7 +139,12 @@ let () =
       in
 
       (estudiante_json :: acum, map_subtemas, nota_final :: todas_las_notas)
+<<<<<<< HEAD
     ) ([], StringMap.empty, []) estudiantes
+=======
+    ) ([], StringMap.empty, [])
+    estudiantes
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
   in
 
   let promedio lst = List.fold_left ( +. ) 0.0 lst /. float_of_int (List.length lst) in
@@ -156,6 +177,7 @@ let () =
     |> fun lst -> `Assoc lst
   in
 
+<<<<<<< HEAD
   let subtemas_criticos =
     StringMap.bindings acumulador_subtemas
     |> List.map (fun (st, (suma, count)) ->
@@ -168,6 +190,8 @@ let () =
     |> fun lst -> `Assoc lst
   in
 
+=======
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
   let out_json =
     `Assoc [
       ("resultados", `List (List.rev resultados));
@@ -176,10 +200,18 @@ let () =
          ("nota_min", `Float nota_min);
          ("nota_max", `Float nota_max);
          ("nota_moda", `Float nota_moda);
+<<<<<<< HEAD
          ("promedio_por_subtema", promedio_por_subtema);
          ("subtemas_criticos", subtemas_criticos)
+=======
+         ("promedio_por_subtema", promedio_por_subtema)
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
        ])
     ]
   in
 
+<<<<<<< HEAD
   to_file "../resultados.json" out_json
+=======
+  Yojson.Basic.to_file "../resultados.json" out_json
+>>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
