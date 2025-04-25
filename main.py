@@ -1,45 +1,63 @@
-# Base para programa en Python con interfaz Tkinter
-
-import json
+import subprocess
 import os
+import json
 import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plt
-import statistics
-from collections import defaultdict
 
 # ========================
-# Carga de datos JSON
+# Ejecutar OCaml y cargar JSON
 # ========================
+
+def generar_resultados():
+    try:
+        # Compilar el proyecto OCaml con dune
+        print("🔨 Compilando OCaml con dune...")
+        subprocess.run(["dune", "build"], cwd="ocaml", check=True)
+        print("✅ Compilación completada.")
+
+        # Ejecutar el binario
+        ruta_ocaml = os.path.join("ocaml", "_build", "default", "calculos.exe")
+        if not os.path.exists(ruta_ocaml):
+            raise FileNotFoundError(f"No se encontró el ejecutable OCaml en {ruta_ocaml}")
+        subprocess.run([ruta_ocaml], check=True)
+        print("✅ OCaml ejecutado correctamente.")
+    except Exception as e:
+        print(f"❌ Error al ejecutar OCaml: {e}")
+
 def cargar_datos(path):
+    if not os.path.exists(path):
+        messagebox.showerror("Error", f"No se encontró el archivo {path}")
+        exit(1)
     with open(path, 'r', encoding='utf-8') as archivo:
         return json.load(archivo)
 
 # ========================
 # Funciones de visualización
 # ========================
-def mostrar_grafico_estudiante(data, estudiante, tipo, tema_id=None):
+def mostrar_grafico_estudiante(estudiante, tipo, tema_id=None):
     plt.clf()
     if tipo == 'general':
-        x = list(estudiante['evaluaciones'].keys())
-        y = [info['nota'] for info in estudiante['evaluaciones'].values()]
+        x = list(estudiante['notas_evaluaciones'].keys())
+        y = [nota for nota in estudiante['notas_evaluaciones'].values()]
         plt.plot(x, y, marker='o')
         plt.title(f"Evolución general de {estudiante['nombre']}")
     elif tipo == 'parciales':
-        parciales = {eid: info['nota'] for eid, info in estudiante['evaluaciones'].items() if eid.startswith('P')}
+        parciales = {eid: nota for eid, nota in estudiante['notas_evaluaciones'].items() if eid.startswith('P')}
         plt.bar(parciales.keys(), parciales.values())
         plt.title(f"Parciales - {estudiante['nombre']}")
     elif tipo == 'otros':
-        otros = {eid: info['nota'] for eid, info in estudiante['evaluaciones'].items() if not eid.startswith('P')}
+        otros = {eid: nota for eid, nota in estudiante['notas_evaluaciones'].items() if not eid.startswith('P')}
         plt.bar(otros.keys(), otros.values())
         plt.title(f"Evaluaciones no parciales - {estudiante['nombre']}")
     elif tipo == 'tema' and tema_id:
-        subtemas = [s['id'] for t in data['curso']['temas'] if t['id'] == tema_id for s in t['subtemas']]
-        tema_notas = {}
-        for eval_info in estudiante['evaluaciones'].values():
-            for sid, nota in eval_info['subtemas'].items():
-                if sid in subtemas:
-                    tema_notas[sid] = nota
+        tema_notas = {
+            sid: nota for sid, nota in estudiante['porcentaje_conocimiento'].items()
+            if sid.startswith(tema_id + ".")
+        }
+        if not tema_notas:
+            messagebox.showwarning("Tema vacío", f"No hay subtemas registrados para el tema {tema_id}")
+            return
         plt.bar(tema_notas.keys(), tema_notas.values())
         plt.title(f"Rendimiento en tema {tema_id} - {estudiante['nombre']}")
     plt.xlabel("Evaluaciones/Subtemas")
@@ -51,9 +69,9 @@ def mostrar_grafico_estudiante(data, estudiante, tipo, tema_id=None):
 
 def mostrar_grafico_general(data, tipo):
     if tipo == 'notas':
-        notas_finales = [e['nota_final'] for e in data['estudiantes']]
-        nombres = [e['nombre'] for e in data['estudiantes']]
-        plt.bar(nombres, notas_finales)
+        nombres = [e['nombre'] for e in data['resultados']]
+        notas = [e['nota_final'] for e in data['resultados']]
+        plt.bar(nombres, notas)
         plt.title("Rendimiento general del curso")
         plt.xlabel("Estudiantes")
         plt.ylabel("Nota Final")
@@ -62,20 +80,24 @@ def mostrar_grafico_general(data, tipo):
         plt.tight_layout()
         plt.grid(True)
         plt.show()
-        stats = f"Promedio: {round(statistics.mean(notas_finales),1)}\n"
-        stats += f"Moda: {statistics.mode(notas_finales)}\n"
-        stats += f"Máximo: {max(notas_finales)}\n"
-        stats += f"Mínimo: {min(notas_finales)}"
-        messagebox.showinfo("Estadísticas", stats)
+
+        stats = data['estadisticas']
+        resumen = (
+            f"Promedio: {round(stats['nota_promedio'], 1)}\n"
+            f"Moda: {stats['nota_moda']}\n"
+            f"Máximo: {stats['nota_max']}\n"
+            f"Mínimo: {stats['nota_min']}"
+        )
+        messagebox.showinfo("Estadísticas", resumen)
+
+        # Mostrar subtemas críticos
+        criticos = data['estadisticas'].get('subtemas_criticos', {})
+        detalle = "\n".join([f"{k}: {v}" for k, v in criticos.items()])
+        messagebox.showinfo("Subtemas Críticos", f"Subtemas con menor promedio:\n{detalle}")
 
     elif tipo == 'subtemas':
-        subtema_notas = defaultdict(list)
-        for estudiante in data['estudiantes']:
-            for eval_info in estudiante['evaluaciones'].values():
-                for sid, nota in eval_info['subtemas'].items():
-                    subtema_notas[sid].append(nota)
-        subtema_promedios = {k: round(sum(v)/len(v),1) for k, v in subtema_notas.items() if v}
-        sorted_items = sorted(subtema_promedios.items(), key=lambda x: x[1], reverse=True)
+        subtemas = data['estadisticas']['promedio_por_subtema']
+        sorted_items = sorted(subtemas.items(), key=lambda x: x[1], reverse=True)
         x, y = zip(*sorted_items)
         plt.figure(figsize=(10, 5))
         plt.bar(x, y)
@@ -92,7 +114,9 @@ def mostrar_grafico_general(data, tipo):
 # Interfaz principal con Tkinter
 # ========================
 def lanzar_interfaz():
-    data = cargar_datos('curso_estudiantes.json')
+    generar_resultados()
+    data = cargar_datos("./resultados.json")
+    estudiantes = data['resultados']
 
     root = tk.Tk()
     root.title("Análisis de Rendimiento Académico")
@@ -104,13 +128,13 @@ def lanzar_interfaz():
         for widget in frame.winfo_children(): widget.destroy()
 
         tk.Label(frame, text="Estudiante:").pack()
-        estudiantes_ids = [e['id'] for e in data['estudiantes']]
+        estudiantes_ids = [e['id'] for e in estudiantes]
         selected_id = tk.StringVar()
         estudiante_dropdown = ttk.Combobox(frame, textvariable=selected_id, values=estudiantes_ids)
         estudiante_dropdown.pack()
 
         tk.Label(frame, text="Tipo de gráfica:").pack()
-        opciones = ["general", "parciales", "otros"] + [f"tema:{t['id']}" for t in data['curso']['temas']]
+        opciones = ["general", "parciales", "otros"] + [f"tema:{i}" for i in ["2", "3", "4", "5", "6", "7"]]
         selected_option = tk.StringVar()
         grafica_dropdown = ttk.Combobox(frame, textvariable=selected_option, values=opciones)
         grafica_dropdown.pack()
@@ -118,14 +142,18 @@ def lanzar_interfaz():
         def graficar_est():
             est_id = selected_id.get()
             opt = selected_option.get()
-            estudiante = next((e for e in data['estudiantes'] if e['id'] == est_id), None)
+            estudiante = next((e for e in estudiantes if e['id'] == est_id), None)
             if not estudiante:
                 messagebox.showerror("Error", "Estudiante no encontrado")
                 return
             if opt.startswith('tema:'):
-                mostrar_grafico_estudiante(data, estudiante, 'tema', tema_id=opt.split(':')[1])
+                mostrar_grafico_estudiante(estudiante, 'tema', tema_id=opt.split(':')[1])
             else:
-                mostrar_grafico_estudiante(data, estudiante, opt)
+                mostrar_grafico_estudiante(estudiante, opt)
+
+            # Mostrar tendencia
+            tendencia = estudiante.get('tendencia', 'desconocida')
+            messagebox.showinfo("Tendencia", f"Tendencia de {estudiante['nombre']}: {tendencia}")
 
         tk.Button(frame, text="Graficar Estudiante", command=graficar_est).pack(pady=10)
 
