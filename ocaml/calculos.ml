@@ -2,17 +2,16 @@ open Yojson.Basic
 open Yojson.Basic.Util
 module StringMap = Map.Make(String)
 
+(* Redondear un número a una cantidad de decimales específica *)
 let redondear_decimales n decimales =
   let factor = 10. ** float_of_int decimales in
   floor (n *. factor +. 0.5) /. factor
 
+(* Limitar el valor máximo a 100 *)
 let limitar_100 n =
   if n > 100.0 then 100.0 else n
 
-<<<<<<< HEAD
-=======
-(* Acumulador para listas con suma y conteo *)
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
+(* Actualizar suma y conteo de valores para cálculo de promedios *)
 let actualizar_promedios mapa clave valor =
   let suma, cuenta =
     match StringMap.find_opt clave mapa with
@@ -21,28 +20,26 @@ let actualizar_promedios mapa clave valor =
   in
   StringMap.add clave (suma, cuenta) mapa
 
-<<<<<<< HEAD
-(* Función para tomar los primeros n elementos de una lista *)
+(* Tomar los primeros n elementos de una lista *)
 let rec take n lst =
   match lst with
   | [] -> []
   | x :: xs -> if n <= 0 then [] else x :: take (n - 1) xs
 
-(* Detectar la tendencia del estudiante entre parciales *)
+(* Clasificar la tendencia del rendimiento entre parciales *)
 let clasificar_tendencia p1 p2 p3 =
   if p1 < p2 && p2 < p3 then "mejora"
   else if p1 > p2 && p2 > p3 then "caída"
   else "estable"
 
+(* Programa principal *)
 let () =
+  (* Cargar archivo JSON de entrada *)
   let json = from_file "./curso_estudiantes.json" in
-=======
-let () =
-  let json = from_file "../curso_estudiantes.json" in
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
   let evaluaciones = json |> member "evaluaciones" |> to_list in
   let estudiantes = json |> member "estudiantes" |> to_list in
 
+  (* Crear mapa de pesos de evaluaciones *)
   let peso_map =
     List.fold_left (fun acc ev ->
       let id = ev |> member "id" |> to_string in
@@ -51,6 +48,7 @@ let () =
     ) StringMap.empty evaluaciones
   in
 
+  (* Crear mapa de subtemas cubiertos por cada evaluación *)
   let eval_subtemas_map =
     List.fold_left (fun acc ev ->
       let id = ev |> member "id" |> to_string in
@@ -59,12 +57,14 @@ let () =
     ) StringMap.empty evaluaciones
   in
 
+  (* Procesar a cada estudiante *)
   let resultados, acumulador_subtemas, notas_finales =
     List.fold_left (fun (acum, map_subtemas, todas_las_notas) est ->
       let id = est |> member "id" |> to_string in
       let nombre = est |> member "nombre" |> to_string in
       let evs = est |> member "evaluaciones" in
 
+      (* Calcular nota final y desempeño por evaluación/subtema *)
       let nota_final, notas_por_eval, conocimientos =
         StringMap.fold (fun eid peso (acc_final, evals_map, subtema_map) ->
           let ev_json = evs |> member eid in
@@ -85,6 +85,7 @@ let () =
         ) peso_map (0.0, StringMap.empty, StringMap.empty)
       in
 
+      (* Construir JSON del porcentaje de conocimiento por subtema *)
       let conocimiento_json =
         StringMap.bindings conocimientos
         |> List.map (fun (st_id, (suma, count)) ->
@@ -95,6 +96,7 @@ let () =
         |> fun lst -> `Assoc lst
       in
 
+      (* Construir JSON de notas por evaluación *)
       let notas_eval_json =
         StringMap.bindings notas_por_eval
         |> List.map (fun (eid, n) ->
@@ -105,7 +107,7 @@ let () =
         |> fun lst -> `Assoc lst
       in
 
-<<<<<<< HEAD
+      (* Detectar tendencia de notas entre parciales *)
       let tendencia =
         try
           let p1 = StringMap.find "P1" notas_por_eval
@@ -115,23 +117,19 @@ let () =
         with _ -> `String "desconocida"
       in
 
-=======
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
+      (* Crear objeto JSON del estudiante *)
       let estudiante_json =
         `Assoc [
           ("id", `String id);
           ("nombre", `String nombre);
           ("nota_final", `Float (limitar_100 (redondear_decimales nota_final 1)));
           ("notas_evaluaciones", notas_eval_json);
-<<<<<<< HEAD
           ("porcentaje_conocimiento", conocimiento_json);
           ("tendencia", tendencia)
-=======
-          ("porcentaje_conocimiento", conocimiento_json)
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
         ]
       in
 
+      (* Acumular información de subtemas para estadísticas globales *)
       let map_subtemas =
         StringMap.fold (fun st (s, _) acc ->
           actualizar_promedios acc st s
@@ -139,15 +137,12 @@ let () =
       in
 
       (estudiante_json :: acum, map_subtemas, nota_final :: todas_las_notas)
-<<<<<<< HEAD
     ) ([], StringMap.empty, []) estudiantes
-=======
-    ) ([], StringMap.empty, [])
-    estudiantes
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
   in
 
+  (* Funciones auxiliares para estadísticas globales *)
   let promedio lst = List.fold_left ( +. ) 0.0 lst /. float_of_int (List.length lst) in
+
   let moda lst =
     lst
     |> List.fold_left (fun m x ->
@@ -162,11 +157,13 @@ let () =
     |> fun (n, _) -> float_of_string n
   in
 
+  (* Calcular estadísticas globales del curso *)
   let nota_prom = redondear_decimales (promedio notas_finales) 1 in
   let nota_min = redondear_decimales (List.fold_left min max_float notas_finales) 1 in
   let nota_max = redondear_decimales (List.fold_left max min_float notas_finales) 1 in
   let nota_moda = redondear_decimales (moda notas_finales) 1 in
 
+  (* Calcular promedio por subtema *)
   let promedio_por_subtema =
     StringMap.bindings acumulador_subtemas
     |> List.map (fun (st, (suma, count)) ->
@@ -177,7 +174,7 @@ let () =
     |> fun lst -> `Assoc lst
   in
 
-<<<<<<< HEAD
+  (* Detectar los 3 subtemas más críticos *)
   let subtemas_criticos =
     StringMap.bindings acumulador_subtemas
     |> List.map (fun (st, (suma, count)) ->
@@ -190,8 +187,7 @@ let () =
     |> fun lst -> `Assoc lst
   in
 
-=======
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
+  (* Crear JSON de salida con resultados y estadísticas *)
   let out_json =
     `Assoc [
       ("resultados", `List (List.rev resultados));
@@ -200,18 +196,11 @@ let () =
          ("nota_min", `Float nota_min);
          ("nota_max", `Float nota_max);
          ("nota_moda", `Float nota_moda);
-<<<<<<< HEAD
          ("promedio_por_subtema", promedio_por_subtema);
          ("subtemas_criticos", subtemas_criticos)
-=======
-         ("promedio_por_subtema", promedio_por_subtema)
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
        ])
     ]
   in
 
-<<<<<<< HEAD
-  to_file "../resultados.json" out_json
-=======
-  Yojson.Basic.to_file "../resultados.json" out_json
->>>>>>> f59d68e636ce625c1aebf17898baa5500a22fc06
+  (* Guardar JSON de salida en archivo *)
+  to_file "./resultados.json" out_json
