@@ -1,6 +1,10 @@
-#
-#
-#
+"""Sistema de Análisis de Rendimiento Académico
+
+Este proyecto analiza el rendimiento de estudiantes en un curso a través de procesamiento 
+en OCaml y visualización en Python. Realizado y desarrollado por los estudiantes:
+
+-Isaí José Navarro Serrano
+-Marco Antonio Quirós Cabezas"""
 
 # Librerías empleadas.
 import subprocess
